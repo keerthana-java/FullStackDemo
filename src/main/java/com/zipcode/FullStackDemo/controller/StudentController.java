@@ -4,7 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import com.repository.StudentRepo;
+import com.zipcode.FullStackDemo.repository.StudentRepo;
 import com.zipcode.FullStackDemo.entity.Student;
 
 import org.slf4j.Logger;
@@ -20,8 +20,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @RestController - Used to create RESTful web services using Spring MVC.
+ * Takes care of mapping request data to the defined request handler method.
+ * It adds the @Controller and @ResponseBody annotations
+ **/
 @RestController
-@RequestMapping("/students")
+@RequestMapping("/students") // localhost:8080/students
 public class StudentController {
     
 
@@ -32,19 +37,31 @@ public class StudentController {
         this.studentRepo = studentRepo;
     }
 
-    // get all students
+    /**
+     * localhost:8080/students,
+     * Get all students,
+     * returns array of student objects
+     **/
     @GetMapping
     public List<Student> getStudents() {
         return studentRepo.findAll();
     }
 
-    // get student by id
+    /**
+     * localhost:8080/students/1,
+     * Get student by id,
+     * returns student object with matching ID
+     **/
     @GetMapping("/{id}")
     public Student getStudent(@PathVariable Long id) {
         return studentRepo.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    // create a new student
+    /**
+     * localhost:8080/students,
+     * Create a new student,
+     * send student object and receive same object with generated ID
+     **/
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody Student student) throws URISyntaxException {
        log.info("Request to create student");
@@ -52,7 +69,11 @@ public class StudentController {
        return ResponseEntity.created(new URI("/students" + savedStudent.getId())).body(savedStudent);     
     }
 
-    // update a student by id
+    /**
+     * localhost:8080/students/1,
+     * Update a student by id,
+     * send new student object with ID to apply to
+     **/
     @PutMapping("/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student) {
         log.info("Request to update student");
@@ -64,7 +85,11 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    // delete a student by id
+    /**
+     * localhost:8080/students/1,
+     * Delete a student by id,
+     * removes student object by ID sent
+     **/
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
         log.info("Request to delete student");

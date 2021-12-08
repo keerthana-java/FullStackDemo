@@ -5,6 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ *  @Entity - Specifies that the class is an entity and is mapped to a database table
+ * @Table - Name of the table in the database, can also specify schema to distinguish one set of tables from another
+ * i.e @Table(name = "students", schema = "roster")
+ **/
 @Entity
 @Table(name = "students")
 public class Student {
