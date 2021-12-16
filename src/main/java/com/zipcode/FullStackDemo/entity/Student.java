@@ -34,10 +34,6 @@ public class Student {
         this.cohort = cohort;
     }    
 
-    public Long getID() {
-        return id;
-    }
-
     public Long getId() {
         return this.id;
     }
